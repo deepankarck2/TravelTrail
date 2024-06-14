@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     // Fetch data from the backend
-    axios.get('http://localhost:8080')
+    axios.get('http://localhost:8080/api/v1/auth/hello')
       .then(response => {
         console.log(response.data);
         setMessage(response.data);

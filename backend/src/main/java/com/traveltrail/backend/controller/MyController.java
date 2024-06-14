@@ -5,10 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 public class MyController {
     @GetMapping("")
     public String helloHere(){
-        return "Hello form 2:32";
+        return "Hello form 3:25pm";
     }
 }
