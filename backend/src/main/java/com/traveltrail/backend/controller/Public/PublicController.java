@@ -1,4 +1,4 @@
-package com.traveltrail.backend.controller;
+package com.traveltrail.backend.controller.Public;
 
 import com.traveltrail.backend.Exceptions.UnprocessiableException;
 import com.traveltrail.backend.dto.AuthResponceDto;
@@ -39,35 +39,4 @@ public class PublicController {
             return ResponseEntity.ok(response);
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ErrorResponseDto> handleBadCredentialsException(RuntimeException ex, WebRequest request) {
-        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
-                .message(ex.getMessage())
-                .statusCode(HttpStatus.UNAUTHORIZED.value())
-                .timestamp(System.currentTimeMillis())
-                .build();
-        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
-    }
-
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ErrorResponseDto> handleRuntimeException(RuntimeException ex, WebRequest request) {
-
-        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
-                .message(ex.getMessage())
-                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .timestamp(System.currentTimeMillis())
-                .build();
-
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler(UnprocessiableException.class)
-    public ResponseEntity<ErrorResponseDto> handleUnprocessibleException(Exception ex){
-        ErrorResponseDto errorResponseDto = ErrorResponseDto.builder()
-                .message(ex.getMessage())
-                .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
-                .timestamp(System.currentTimeMillis()).build();
-
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.UNPROCESSABLE_ENTITY);
-    }
 }
