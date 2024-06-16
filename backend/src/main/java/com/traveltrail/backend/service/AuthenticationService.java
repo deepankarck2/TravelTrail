@@ -1,12 +1,17 @@
 package com.traveltrail.backend.service;
 
+import com.traveltrail.backend.Exceptions.UnprocessiableException;
 import com.traveltrail.backend.Security.JwtTokenUtil;
 import com.traveltrail.backend.dto.AuthResponceDto;
+import com.traveltrail.backend.dto.LoginRequestDto;
 import com.traveltrail.backend.dto.RegisterRequestDto;
 import com.traveltrail.backend.model.User;
 import com.traveltrail.backend.repository.UserRepository;
 import io.jsonwebtoken.impl.JwtTokenizer;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +34,7 @@ public class AuthenticationService {
         String email = requestDto.getEmail();
 
         if(userRepository.existsByEmail(email)){
-            throw new RuntimeException("User already exists!");
+            throw new UnprocessiableException("User already exists!");
         }
 
         User user = User.builder()
@@ -41,6 +46,35 @@ public class AuthenticationService {
         String jwtToken = jwtTokenUtil.generateToken(user);
 
         return AuthResponceDto.builder()
+                .token(jwtToken)
+                .build();
+    }
+
+    public AuthResponceDto loginRequestService(LoginRequestDto loginRequestDto) {
+        if(loginRequestDto == null){
+            throw new RuntimeException("loginRequest is null");
+        }
+
+        String email = loginRequestDto.getEmail();
+        String password = loginRequestDto.getPassword();
+
+        try{
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password)
+            );
+        } catch (BadCredentialsException e) {
+                throw new RuntimeException("Invalid email or password", e);
+        } catch (AuthenticationException e){
+            throw new RuntimeException("Authentication failed.", e);
+        }
+
+
+        User user = userRepository.findByEmail(email).orElseThrow();
+
+        String jwtToken = jwtTokenUtil.generateToken(user);
+
+        return AuthResponceDto
+                .builder()
                 .token(jwtToken)
                 .build();
     }

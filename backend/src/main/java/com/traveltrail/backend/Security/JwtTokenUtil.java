@@ -16,6 +16,8 @@ import java.util.function.Function;
 @Service
 public class JwtTokenUtil {
     public static final String SECRET_KEY = "266010e2cb2cb6db23b9fefaf2ba5f145462c500290ae429fe5fc32b213a229a";
+    private static final long EXPIRATION_TIME_MS = 1000 * 60 * 60 * 24; // 24 hours
+
     public String extractUserName(String token){
         return extractClaim(token, Claims::getSubject);
     }
@@ -47,7 +49,7 @@ public class JwtTokenUtil {
                 .claims(extraClaim)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000*60*24))
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME_MS))
                 .signWith(getSignInKey(), Jwts.SIG.HS256)
                 .compact();
     }
