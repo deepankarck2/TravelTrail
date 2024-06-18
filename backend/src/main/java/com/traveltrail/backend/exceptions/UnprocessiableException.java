@@ -1,4 +1,4 @@
-package com.traveltrail.backend.Exceptions;
+package com.traveltrail.backend.exceptions;
 
 public class UnprocessiableException extends RuntimeException {
     public UnprocessiableException(String message){

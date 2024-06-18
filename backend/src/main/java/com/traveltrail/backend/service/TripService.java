@@ -43,6 +43,12 @@ public class TripService {
 //            throw new SecurityException("User ID does not match the authenticated user");
 //        }
 
+        LocalDate startDate= tripDto.getStartDate();
+        LocalDate endDate = tripDto.getEndDate();
+        if(startDate.isAfter(endDate)){
+            throw new IllegalArgumentException("End date can't before start date");
+        }
+
         // Fetch the user entity
         User user = userRepository.findById(tripDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
@@ -51,8 +57,8 @@ public class TripService {
         Trip newTrip = Trip.builder()
                 .name(tripDto.getName())
                 .destination(tripDto.getDestination())
-                .startDate(tripDto.getStartDate())
-                .endDate(tripDto.getEndDate())
+                .startDate(startDate)
+                .endDate(endDate)
                 .coverPhotoUrl(tripDto.getCoverPhotoUrl())
                 .user(user) // Set the user
                 .build();

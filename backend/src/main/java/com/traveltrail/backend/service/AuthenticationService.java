@@ -1,13 +1,12 @@
 package com.traveltrail.backend.service;
 
-import com.traveltrail.backend.Exceptions.UnprocessiableException;
+import com.traveltrail.backend.exceptions.UnprocessiableException;
 import com.traveltrail.backend.Security.JwtTokenUtil;
 import com.traveltrail.backend.dto.AuthResponceDto;
 import com.traveltrail.backend.dto.LoginRequestDto;
 import com.traveltrail.backend.dto.RegisterRequestDto;
 import com.traveltrail.backend.model.User;
 import com.traveltrail.backend.repository.UserRepository;
-import io.jsonwebtoken.impl.JwtTokenizer;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

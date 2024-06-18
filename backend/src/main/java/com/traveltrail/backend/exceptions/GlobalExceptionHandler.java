@@ -1,4 +1,4 @@
-package com.traveltrail.backend.Exceptions;
+package com.traveltrail.backend.exceptions;
 
 import com.traveltrail.backend.dto.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
@@ -61,6 +61,4 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorResponseDto, HttpStatus.FORBIDDEN);
     }
-
-    // Add more exception handlers as needed
 }

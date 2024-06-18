@@ -1,16 +1,11 @@
 package com.traveltrail.backend.controller.Public;
 
-import com.traveltrail.backend.Exceptions.UnprocessiableException;
 import com.traveltrail.backend.dto.AuthResponceDto;
-import com.traveltrail.backend.dto.ErrorResponseDto;
 import com.traveltrail.backend.dto.LoginRequestDto;
 import com.traveltrail.backend.dto.RegisterRequestDto;
 import com.traveltrail.backend.service.AuthenticationService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 
 @RestController
 @RequestMapping("/api/public")
