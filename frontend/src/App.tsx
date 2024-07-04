@@ -1,30 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import axios from 'axios';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import CreateTripPage from './pages/authPages/CreateTripPage';
+import AllTripsPage from './pages/authPages/AllTripsPage';
 
 function App() {
 
-  const [message, setMessage] = useState("");
-
-
-  useEffect(() => {
-    // Fetch data from the backend
-    axios.get('http://localhost:8080/api/v1/auth/hello')
-      .then(response => {
-        console.log(response.data);
-        setMessage(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the data!', error);
-      });
-  }, []);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>The message is below:</h1>
-        <p>{message}</p>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/register" element={<Register />} />
+          <Route path="*" element={<h1>Not Found 404</h1>} />
+          <Route path="/trip/create" element={<CreateTripPage />} />
+          <Route path='/trip/trips' element={<AllTripsPage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

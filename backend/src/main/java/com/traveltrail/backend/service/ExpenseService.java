@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ExpenseService {
+public class ExpenseService{
     private final TripRepository tripRepository;
     private final ExpenseRepository expenseRepository;
     private final BudgetCategoryRepository budgetCategoryRepository;

@@ -2,7 +2,7 @@ package com.traveltrail.backend.service;
 
 import com.traveltrail.backend.exceptions.UnprocessiableException;
 import com.traveltrail.backend.Security.JwtTokenUtil;
-import com.traveltrail.backend.dto.AuthResponceDto;
+import com.traveltrail.backend.dto.AuthResponseDto;
 import com.traveltrail.backend.dto.LoginRequestDto;
 import com.traveltrail.backend.dto.RegisterRequestDto;
 import com.traveltrail.backend.model.User;
@@ -29,7 +29,7 @@ public class AuthenticationService {
         this.jwtTokenUtil = jwtTokenUtil;
         this.authenticationManager = authenticationManager;
     }
-    public AuthResponceDto registerRequestService(RegisterRequestDto requestDto){
+    public AuthResponseDto registerRequestService(RegisterRequestDto requestDto){
         String email = requestDto.getEmail();
 
         if(userRepository.existsByEmail(email)){
@@ -44,12 +44,12 @@ public class AuthenticationService {
         userRepository.save(user);
         String jwtToken = jwtTokenUtil.generateToken(user);
 
-        return AuthResponceDto.builder()
+        return AuthResponseDto.builder()
                 .token(jwtToken)
                 .build();
     }
 
-    public AuthResponceDto loginRequestService(LoginRequestDto loginRequestDto) {
+    public AuthResponseDto loginRequestService(LoginRequestDto loginRequestDto) {
         if(loginRequestDto == null){
             throw new RuntimeException("loginRequest is null");
         }
@@ -62,7 +62,7 @@ public class AuthenticationService {
                     new UsernamePasswordAuthenticationToken(email, password)
             );
         } catch (BadCredentialsException e) {
-                throw new RuntimeException("Invalid email or password", e);
+                throw new BadCredentialsException("Invalid email or password", e);
         } catch (AuthenticationException e){
             throw new RuntimeException("Authentication failed.", e);
         }
@@ -72,7 +72,7 @@ public class AuthenticationService {
 
         String jwtToken = jwtTokenUtil.generateToken(user);
 
-        return AuthResponceDto
+        return AuthResponseDto
                 .builder()
                 .token(jwtToken)
                 .build();

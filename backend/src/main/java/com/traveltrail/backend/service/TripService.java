@@ -59,7 +59,8 @@ public class TripService {
                 .destination(tripDto.getDestination())
                 .startDate(startDate)
                 .endDate(endDate)
-                .coverPhotoUrl(tripDto.getCoverPhotoUrl())
+//                .coverPhotoUrl(tripDto.getCoverPhotoUrl())
+                .coverPhotoUrl("url here")
                 .user(user) // Set the user
                 .build();
 
